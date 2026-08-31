@@ -1,0 +1,26 @@
+{
+  "name": "technocore-safeproof-cli",
+  "version": "0.1.0",
+  "description": "Local-first, resumable and verifiable Technocore contribution publisher.",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/se7enbyte/technocore-safeproof-cli.git"
+  },
+  "homepage": "https://github.com/se7enbyte/technocore-safeproof-cli#readme",
+  "bugs": {
+    "url": "https://github.com/se7enbyte/technocore-safeproof-cli/issues"
+  },
+  "main": "src/cli.js",
+  "bin": {
+    "safeproof": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,9 @@
+Technocore SafeProof CLI
+
+This project was developed after reviewing UfukNode/technocore-did-tool
+(MIT License, Copyright (c) 2026 UfukNode). Its MIT license notice is retained
+in LICENSE.
+
+Technocore protocol behavior is implemented from the public documentation and
+reference signer in flop-labs/technocore-chat (Apache License 2.0). SafeProof is
+independent community software and is not an official FLOP Labs product.

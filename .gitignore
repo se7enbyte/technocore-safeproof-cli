@@ -1,0 +1,16 @@
+node_modules/
+.DS_Store
+npm-debug.log*
+.env
+.env.*
+!.env.example
+.safeproof/
+private/
+identity.json
+identity-*.json
+*private-key*.json
+passphrase*
+safeproof-state.json
+state.json
+*safeproof-state*.json
+*.tmp
