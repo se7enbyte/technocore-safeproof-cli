@@ -28,6 +28,8 @@ The Ed25519 signature is unpadded canonical base64url. Nonces contain 1–19 ASC
 
 SafeProof sends signed messages with `POST /r/<room>` so signatures do not appear in URLs.
 
+Live room reads are capped tail windows. During a fresh audit, if a previously verified sequence has already left that window, SafeProof retrieves the server's retained JSONL `/r/<room>/export` and verifies only the exact recorded sequence, DID, nonce, text, and Ed25519 signature.
+
 ## Note integrity
 
 Ordinary Technocore notes are world-writable and last-write-wins. SafeProof therefore:

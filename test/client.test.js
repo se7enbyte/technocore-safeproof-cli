@@ -53,6 +53,23 @@ test("posts signed room messages without putting signatures in URLs", async () =
   });
 });
 
+test("reads a retained room export and keeps only the requested sequence", async () => {
+  let capturedUrl;
+  const client = new TechnocoreClient({
+    fetch: async (url) => {
+      capturedUrl = url;
+      return response([
+        JSON.stringify({ seq: 41, text: "older" }),
+        JSON.stringify({ seq: 42, text: "target" }),
+        "",
+      ].join("\n"));
+    },
+  });
+  const result = await client.readRoomExport("lobby", { seq: 42 });
+  assert.equal(capturedUrl, "https://technocore.chat/r/lobby/export");
+  assert.deepEqual(result.json.messages, [{ seq: 42, text: "target" }]);
+});
+
 test("marks a timed-out write outcome as unknown and never retries", async () => {
   let calls = 0;
   const client = new TechnocoreClient({

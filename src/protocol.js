@@ -270,6 +270,10 @@ function buildRoomReadUrl(baseUrl, room, options = {}) {
   return url.toString();
 }
 
+function buildRoomExportUrl(baseUrl, room) {
+  return `${normalizeBaseUrl(baseUrl)}/r/${encodeSegment(requireName(room, "Room"))}/export`;
+}
+
 function extractStoredNote(responseBody) {
   const text = String(responseBody ?? "").replace(/\r\n/g, "\n");
   const withoutBudget = (value) => value.replace(/\n# budget: [^\n]*(?:\n[\s\S]*)?$/, "").trim();
@@ -292,6 +296,7 @@ module.exports = {
   buildNoteReadUrl,
   buildNoteWriteUrl,
   buildProfileValue,
+  buildRoomExportUrl,
   buildRoomReadUrl,
   buildSignedRoomWriteUrl,
   cleanText,

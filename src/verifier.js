@@ -24,13 +24,24 @@ async function auditNote(client, record) {
 
 async function auditRoom(client, expected, identity, options = {}) {
   try {
-    const response = await client.readRoom(expected.room, {
+    let response = await client.readRoom(expected.room, {
       limit: 200,
       since: Number.isSafeInteger(options.seq) && options.seq > 0 ? Math.max(0, options.seq - 1) : undefined,
     });
-    const receipt = matchingRoomReceipt(response, expected, identity);
+    let receipt = matchingRoomReceipt(response, expected, identity);
+    let source = "tail";
+    if (
+      !receipt
+      && Number.isSafeInteger(options.seq)
+      && options.seq > 0
+      && typeof client.readRoomExport === "function"
+    ) {
+      response = await client.readRoomExport(expected.room, { seq: options.seq });
+      receipt = matchingRoomReceipt(response, expected, identity);
+      source = "export";
+    }
     return receipt
-      ? { ok: true, found: true, ...receipt }
+      ? { ok: true, found: true, source, ...receipt }
       : { ok: false, found: false, room: expected.room, error: "Matching signed message was not found." };
   } catch (error) {
     return { ok: false, found: false, room: expected.room, error: error.message };

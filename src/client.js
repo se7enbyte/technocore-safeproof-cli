@@ -152,6 +152,32 @@ class TechnocoreClient {
     }
   }
 
+  async readRoomExport(room, options = {}) {
+    const result = await this.request(`/r/${encodeSegment(room)}/export`, {
+      timeoutMs: options.timeoutMs || Math.max(this.timeoutMs, 60000),
+    });
+    const messages = [];
+    const targetSeq = options.seq;
+    if (targetSeq !== undefined && (!Number.isSafeInteger(targetSeq) || targetSeq < 1)) {
+      throw new Error("Export sequence must be a positive safe integer.");
+    }
+    for (const line of result.body.split(/\r?\n/)) {
+      if (!line.trim()) continue;
+      let message;
+      try {
+        message = JSON.parse(line);
+      } catch (error) {
+        throw new TechnocoreError("Technocore room export contained invalid JSONL.", {
+          status: result.status,
+          body: line.slice(0, 200),
+          cause: error,
+        });
+      }
+      if (targetSeq === undefined || message?.seq === targetSeq) messages.push(message);
+    }
+    return { ...result, json: { room: String(room), messages } };
+  }
+
   async writeSignedRoom(room, signedMessage) {
     return this.request(`/r/${encodeSegment(room)}`, {
       method: "POST",

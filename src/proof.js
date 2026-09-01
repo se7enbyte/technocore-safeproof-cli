@@ -1,6 +1,6 @@
 "use strict";
 
-const { buildRoomReadUrl } = require("./protocol");
+const { buildRoomExportUrl, buildRoomReadUrl } = require("./protocol");
 const { assertPlanContext } = require("./kit");
 const { OPERATION_ORDER, assertNoSecrets, assertState } = require("./state");
 
@@ -32,6 +32,7 @@ function roomProof(state, name) {
       limit: 200,
       since: Number.isSafeInteger(receipt?.seq) && receipt.seq > 0 ? Math.max(0, receipt.seq - 1) : undefined,
     }),
+    exportUrl: buildRoomExportUrl(state.context.baseUrl, message.room),
     seq: receipt?.seq ?? null,
     ts: receipt?.ts || "",
     nonce: message.nonce,
@@ -114,6 +115,7 @@ function markdownForProof(proof) {
   for (const [label, message] of Object.entries(proof.signedMessages)) {
     if (!message) continue;
     lines.push(`- ${label}: ${message.status}${message.seq !== null ? ` (room ${message.room}, seq ${message.seq})` : ""}`);
+    lines.push(`  - Retained export: ${message.exportUrl}`);
   }
   lines.push(
     "",
