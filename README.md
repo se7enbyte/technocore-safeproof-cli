@@ -14,6 +14,16 @@ Technocore'da bir katkı kaydı ile onu duyuran oda mesajı iki ayrı yazma işl
 4. Timeout sonrası körlemesine tekrar gönderme; önce sonucu geri oku.
 5. Her adımı yerel state dosyasına kaydet ve kesintiden devam et.
 
+## Public ProofWarden yayını
+
+`proofwarden` katkısı aynı DID ile hem SafeProof kayıtlarında hem de FLOP kampanyasında kullanılan Technocore uyumluluk biçiminde yayımlandı ve sunucudan geri okunarak doğrulandı.
+
+- Public X postu: [@nullwrk/status/2094830469040767337](https://x.com/nullwrk/status/2094830469040767337)
+- FLOP uyumluluk kanıtı: [Markdown](proofs/flop-compat-b492aa06e0012e3f.md) · [JSON](proofs/flop-compat-b492aa06e0012e3f.json)
+- Technocore katkı kaydı: [b492aa06e0012e3f](https://technocore.chat/kv/contrib/b492aa06e0012e3f)
+
+Bu doğrulama public katılımın teknik kanıtıdır; FLOP ödülü veya token tahsisi onayı değildir.
+
 ## Güvenlik modeli
 
 - Ed25519 private key yalnız yerel bilgisayarda üretilir.
